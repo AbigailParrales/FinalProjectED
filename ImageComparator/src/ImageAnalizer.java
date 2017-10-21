@@ -118,6 +118,8 @@ public class ImageAnalizer {
 			return 255;
 		}
 	}
+	
+	
 
 	public static void main(String[] args) {
 				//Crea el objeto de Computer Vision
