@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-
 public class ImageAnalizer {
 	/**
 	 * This method reads the image provided by the given filename and returns the Buffered version of it
@@ -120,12 +119,40 @@ public class ImageAnalizer {
 		}
 	}
 
-
-
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+				//Crea el objeto de Computer Vision
+				ImageAnalizer IA = new ImageAnalizer();
+				
+				//Lee una imagen
+				BufferedImage rgbImage = IA.readImage("Gong Yoo.png");
+				
+				//Guarda una imagen a un archivo
+				IA.savePNG( "copyGoong Yoo.png", rgbImage );
+				
+				//Obtiene e imprime las dimensiones de la imagen leída
+				int W, H;
+				W = rgbImage.getWidth();
+				H = rgbImage.getHeight();
+				System.out.println("W: " + W);
+				System.out.println("H: " + H);
+				
+				//Transforma de RGB a escala de grises
+				BufferedImage grayImage = IA.convertToGrayScale( rgbImage, BufferedImage.TYPE_BYTE_GRAY );
+				IA.savePNG( "grayGoong Yoo.png", grayImage );
+				System.out.println("grayGoong Yoo.png saved");
+				
+				//Cambia el tamaño de la imagen a la mitad
+				BufferedImage resizedImage = IA.resizeImage(rgbImage,(int)(W*0.5),(int)(H*0.5));
+				IA.savePNG( "resizedGoong Yoo.png", resizedImage );
+				System.out.println("resizedGoong Yoo.png saved");
+				
+				//Tomar un pixel RGB
+				int[] rgbVector = IA.getRGBPixel( rgbImage, 100, 100 );
+				System.out.println( "rgbPixel-> r: " + rgbVector[0] + " g: " + rgbVector[1] + " b: " + rgbVector[2] );
+				
+				//Toma un pixel Gray
+				int grayPixel = IA.getGrayPixel(grayImage, 150, 100);
+				System.out.println( "grayPixel: " + grayPixel );
 	}
 
 }
