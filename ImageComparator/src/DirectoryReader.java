@@ -19,7 +19,6 @@ public class DirectoryReader {
 		
 		System.out.println();
 		
->>>>>>> 781ff733738a6e46127d9175b7b746af154fee6c
 	}
 
 }

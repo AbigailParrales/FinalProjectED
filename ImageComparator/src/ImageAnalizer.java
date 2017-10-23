@@ -119,7 +119,7 @@ public class ImageAnalizer {
 			return 255;
 		}
 	}
-<<<<<<< HEAD
+
 
 	public boolean compareSameImage(String imageA, String imageB) {        
 	    try {
@@ -149,7 +149,7 @@ public class ImageAnalizer {
 	    }
 	}
 
-=======
+
 	
 	
 	public int SAD(BufferedImage a,BufferedImage b) {
@@ -158,7 +158,7 @@ public class ImageAnalizer {
 		return 0;
 	}
 	
->>>>>>> 781ff733738a6e46127d9175b7b746af154fee6c
+
 
 	public static void main(String[] args) {
 				//Crea el objeto de Computer Vision
