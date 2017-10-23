@@ -120,6 +120,12 @@ public class ImageAnalizer {
 	}
 	
 	
+	public int SAD(BufferedImage a,BufferedImage b) {
+		
+		//while 
+		return 0;
+	}
+	
 
 	public static void main(String[] args) {
 				//Crea el objeto de Computer Vision

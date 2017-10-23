@@ -6,9 +6,16 @@ public class DirectoryReader {
 	
 	public static void main(String[] args) {
 
-		File f = new File("C:\\");
+		/*File f = new File("C:\\");
 		String [] names = f.list();
 		System.out.println(Arrays.toString(names));	
+		*/
+		
+		int [][] a= new int[2][3];
+		int [][] b= new int[2][3];
+		
+		System.out.println();
+		
 	}
 
 }
