@@ -2,6 +2,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
+import java.awt.image.DataBuffer;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
@@ -73,12 +74,12 @@ public class ImageAnalizer {
 		double factor = 1.0d;
 		if(src.getWidth() > src.getHeight()){
 			factor = ((double)src.getHeight()/(double)src.getWidth());
-			finalh = (int)(finalw * factor);                
+			finalh = (int)(finalw * factor);
 		}
 		else{
 			factor = ((double)src.getWidth()/(double)src.getHeight());
 			finalw = (int)(finalh * factor);
-		}   
+		}
 
 		BufferedImage resizedImg = new BufferedImage(finalw, finalh, BufferedImage.TRANSLUCENT);
 		Graphics2D g2 = resizedImg.createGraphics();
@@ -87,7 +88,7 @@ public class ImageAnalizer {
 		g2.dispose();
 		return resizedImg;
 	}
-	
+
 	/**
 	 * Gets the RGB version of the pixel contained by the received image in the given coordinates
 	 * @param rgbImage
@@ -102,14 +103,14 @@ public class ImageAnalizer {
 	}
 
 	/**
-	 * Returns the integer value of the pixel contained by the received image in the given coordinates 
+	 * Returns the integer value of the pixel contained by the received image in the given coordinates
 	 * @param grayImage
 	 * @param x
 	 * @param y
 	 * @return An integer with the value of the pixel
 	 * @author Jairo Salazar
 	 */
-	public int getGrayPixel(BufferedImage grayImage, int x, int y){		
+	public int getGrayPixel(BufferedImage grayImage, int x, int y){
 		try	{
 			WritableRaster wr = grayImage.getRaster();
 			return wr.getSample(x, y, 0);
@@ -118,8 +119,35 @@ public class ImageAnalizer {
 			return 255;
 		}
 	}
-	
-	
+
+	public boolean compareSameImage(String imageA, String imageB) {        
+	    try {
+	        // take buffer data from botm image files //
+	        BufferedImage biA = ImageIO.read(new File(imageA));
+	        DataBuffer dbA = biA.getData().getDataBuffer();
+	        int sizeA = dbA.getSize();                      
+	        BufferedImage biB = ImageIO.read(new File(imageB));
+	        DataBuffer dbB = biB.getData().getDataBuffer();
+	        int sizeB = dbB.getSize();
+	        // compare data-buffer objects //
+	        if(sizeA == sizeB) {
+	            for(int i=0; i<sizeA; i++) { 
+	                if(dbA.getElem(i) != dbB.getElem(i)) {
+	                    return false;
+	                }
+	            }
+	            return true;
+	        }
+	        else {
+	            return false;
+	        }
+	    } 
+	    catch (Exception e) { 
+	        System.out.println("Failed to compare image files ...");
+	        return  false;
+	    }
+	}
+
 
 	public static void main(String[] args) {
 				//Crea el objeto de Computer Vision
@@ -127,31 +155,31 @@ public class ImageAnalizer {
 				
 				//Lee una imagen
 				BufferedImage rgbImage = IA.readImage("Gong Yoo.png");
-				
+
 				//Guarda una imagen a un archivo
 				IA.savePNG( "copyGoong Yoo.png", rgbImage );
-				
+
 				//Obtiene e imprime las dimensiones de la imagen leída
 				int W, H;
 				W = rgbImage.getWidth();
 				H = rgbImage.getHeight();
 				System.out.println("W: " + W);
 				System.out.println("H: " + H);
-				
+
 				//Transforma de RGB a escala de grises
 				BufferedImage grayImage = IA.convertToGrayScale( rgbImage, BufferedImage.TYPE_BYTE_GRAY );
 				IA.savePNG( "grayGoong Yoo.png", grayImage );
 				System.out.println("grayGoong Yoo.png saved");
-				
+
 				//Cambia el tamaño de la imagen a la mitad
 				BufferedImage resizedImage = IA.resizeImage(rgbImage,(int)(W*0.5),(int)(H*0.5));
 				IA.savePNG( "resizedGoong Yoo.png", resizedImage );
 				System.out.println("resizedGoong Yoo.png saved");
-				
+
 				//Tomar un pixel RGB
 				int[] rgbVector = IA.getRGBPixel( rgbImage, 100, 100 );
 				System.out.println( "rgbPixel-> r: " + rgbVector[0] + " g: " + rgbVector[1] + " b: " + rgbVector[2] );
-				
+
 				//Toma un pixel Gray
 				int grayPixel = IA.getGrayPixel(grayImage, 150, 100);
 				System.out.println( "grayPixel: " + grayPixel );
